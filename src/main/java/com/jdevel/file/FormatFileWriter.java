@@ -23,19 +23,19 @@ public abstract class FormatFileWriter {
     }
 
     /**
-     * Basic setter for the file
-     * @param file file to be written to
-     */
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    /**
      * Basic getter for the file
      * @return the current file used for writing
      */
     public File getFile() {
         return this.file;
+    }
+
+    /**
+     * Basic setter for the file
+     * @param file file to be written to
+     */
+    public void setFile(File file) {
+        this.file = file;
     }
 
 }
