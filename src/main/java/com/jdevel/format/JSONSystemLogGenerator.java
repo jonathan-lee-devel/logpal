@@ -39,8 +39,8 @@ public class JSONSystemLogGenerator extends FormatSystemLogGenerator {
         while (alterationListIterator.hasNext()) {
             Alteration alteration = alterationListIterator.next();
             JSONObject jsonAlteration = new JSONObject();
-            jsonAlteration.put("id", alteration.getId());
-            jsonAlteration.put("dateTime", alteration.getDateTime());
+            jsonAlteration.put("id", alteration.getId().toString());
+            jsonAlteration.put("dateTime", alteration.getDateTime().toString());
             jsonAlteration.put("title", alteration.getTitle());
             jsonAlteration.put("type", alteration.getType());
             // Procedure
