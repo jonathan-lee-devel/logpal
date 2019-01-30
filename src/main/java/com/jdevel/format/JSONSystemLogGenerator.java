@@ -5,12 +5,33 @@ import com.jdevel.alteration.SystemLog;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
+import java.util.ListIterator;
 import java.util.UUID;
 
 /**
  * System log generator for the JSON format
  */
-public class JSONSystemLogGenerator extends FormatGenerator {
+public class JSONSystemLogGenerator extends FormatSystemLogGenerator {
+
+    /**
+     * JSON System Log (not the direct JSON object)
+     */
+    private JSONSystemLog jsonSystemLog;
+
+    /**
+     * Default constructor, simply passes the Format.getJsonFormat() to the super (format parameter)
+     */
+    public JSONSystemLogGenerator() {
+        super(Format.getJsonFormat());
+    }
+
+    public JSONSystemLog getFormattedLog() {
+        return null;
+    }
+
+    /*
+     * STATIC METHODS MOST LIKELY WILL BE REMOVED
+     */
 
     public static JSONObject getJSONObjectFromSystemLog(SystemLog systemLog) {
         // JSON object representing the log
@@ -19,8 +40,9 @@ public class JSONSystemLogGenerator extends FormatGenerator {
         JSONArray jsonAlterations = new JSONArray();
 
         // Add each alteration from system log parameter to the JSON alterations array
-        for (Alteration alteration : systemLog.getAlterations()) {
-            jsonAlterations.add( JSONSystemLogGenerator.getJSONObjectFromAlteration(alteration) );
+        ListIterator<Alteration> alterationListIterator = systemLog.getAlterationsIterator();
+        while (alterationListIterator.hasNext()) {
+            jsonAlterations.add( JSONSystemLogGenerator.getJSONObjectFromAlteration(alterationListIterator.next()) );
         }
         // Add the JSON alterations array to the log
         jsonLog.put("alterations", jsonAlterations);
@@ -41,9 +63,12 @@ public class JSONSystemLogGenerator extends FormatGenerator {
 
         // Array for the references
         JSONArray jsonReferences = new JSONArray();
-        for (UUID id : alteration.getReferences()) {
-            jsonReferences.add(id);
+        // Add all references in the references ArrayList to the JSON references Array
+        ListIterator<UUID> referencesListIterator = alteration.getReferencesIterator();
+        while (referencesListIterator.hasNext()) {
+            jsonReferences.add( referencesListIterator.next() );
         }
+        // Add the JSON references Array to the JSON alteration
         jsonAlteration.put("references", jsonReferences);
 
         // Return generated JSON alteration
