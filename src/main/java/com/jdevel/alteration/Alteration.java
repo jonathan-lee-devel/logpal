@@ -2,6 +2,7 @@ package com.jdevel.alteration;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.ListIterator;
 import java.util.UUID;
 
 /**
@@ -31,14 +32,44 @@ public class Alteration {
     private String type;
 
     /**
+     * Detailed procedure involved to perform the alteration
+     */
+    private Procedure procedure;
+
+    /**
      * List of ids which the alteration may reference, for example an 'uninstallation' may refer to the original 'installation'
      */
     private ArrayList<UUID> references;
 
-    /**
-     * Detailed procedure involved to perform the alteration
+    /*
+     * List Access Methods
      */
-    private Procedure procedure;
+
+    /**
+     * Add a reference to the references ArrayList
+     * @param reference reference to be added to the list
+     * @return success flag
+     */
+    public boolean addReference(UUID reference) {
+        return this.getReferences().add(reference);
+    }
+
+    /**
+     * Remove a reference from the references ArrayList
+     * @param reference reference to be removed from the references ArrayList
+     * @return success flag
+     */
+    public boolean removeReference(UUID reference) {
+        return this.getReferences().remove(reference);
+    }
+
+    /**
+     * Getter for ListIterator for the references ArrayList
+     * @return ListIterator for the references ArrayList
+     */
+    public ListIterator<UUID> getReferencesIterator() {
+        return this.getReferences().listIterator();
+    }
 
     /*
      * Getters and Setters
@@ -109,22 +140,6 @@ public class Alteration {
     }
 
     /**
-     * Getter for references
-     * @return references
-     */
-    public ArrayList<UUID> getReferences() {
-        return references;
-    }
-
-    /**
-     * Setter for references
-     * @param references references to be set
-     */
-    public void setReferences(ArrayList<UUID> references) {
-        this.references = references;
-    }
-
-    /**
      * Getter for procedure
      * @return procedure
      */
@@ -138,6 +153,22 @@ public class Alteration {
      */
     public void setProcedure(Procedure procedure) {
         this.procedure = procedure;
+    }
+
+    /**
+     * Getter for references
+     * @return references
+     */
+    private ArrayList<UUID> getReferences() {
+        return references;
+    }
+
+    /**
+     * Setter for references
+     * @param references references to be set
+     */
+    private void setReferences(ArrayList<UUID> references) {
+        this.references = references;
     }
 
 }

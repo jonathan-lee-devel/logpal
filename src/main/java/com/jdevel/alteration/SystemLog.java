@@ -1,6 +1,7 @@
 package com.jdevel.alteration;
 
 import java.util.ArrayList;
+import java.util.ListIterator;
 
 /**
  * Log which contains all of the alterations performed on the system
@@ -19,6 +20,10 @@ public class SystemLog {
         this.setAlterations(new ArrayList<>());
     }
 
+    /*
+     * List Access Methods
+     */
+
     /**
      * Add an alteration to the log
      * @param alteration to be added to the log
@@ -36,10 +41,18 @@ public class SystemLog {
     }
 
     /**
+     * Getter for ListIterator for alterations list
+     * @return ListIterator for alterations list
+     */
+    public ListIterator<Alteration> getAlterationsIterator() {
+        return this.getAlterations().listIterator();
+    }
+
+    /**
      * Getter for the alterations list
      * @return the alterations list
      */
-    public ArrayList<Alteration> getAlterations() {
+    private ArrayList<Alteration> getAlterations() {
         return this.alterations;
     }
 

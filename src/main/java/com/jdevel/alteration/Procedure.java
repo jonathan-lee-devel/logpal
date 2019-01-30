@@ -20,6 +20,4 @@ public class Procedure {
         return this.contents;
     }
 
-    public void
-
 }
