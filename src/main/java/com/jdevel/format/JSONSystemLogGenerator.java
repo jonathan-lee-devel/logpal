@@ -14,26 +14,50 @@ import java.util.UUID;
 public class JSONSystemLogGenerator extends FormatSystemLogGenerator {
 
     /**
-     * JSON System Log (not the direct JSON object)
-     */
-    private JSONSystemLog jsonSystemLog;
-
-    /**
      * Default constructor, simply passes the Format.getJsonFormat() to the super (format parameter)
      */
     public JSONSystemLogGenerator() {
         super(Format.getJsonFormat());
     }
 
-    public JSONSystemLog getFormattedLog() {
-        return null;
+    /**
+     * Returns JSON-format log from the format-independent SystemLog parameter passed
+     * @param systemLog format-independent log for which a format-specific log is to be generated
+     * @return JSON-format log generated from the format-independent SystemLog parameter passed
+     */
+    @Override
+    public JSONSystemLog getFormattedLog(SystemLog systemLog) {
+        JSONSystemLog jsonSystemLog = new JSONSystemLog();
+
+        // Obtain reference to inner JSON object of JSONSystemLog object
+        JSONObject jsonSystemLogObject = jsonSystemLog.getSystemLogJsonObject();
+        // Create JSON array to store all alterations
+        JSONArray jsonAlterationsArray = new JSONArray();
+
+        // Iterate through all alterations of the SystemLog parameter, adding alterations to JSON alterations array
+        ListIterator<Alteration> alterationListIterator = systemLog.getAlterationsIterator();
+        while (alterationListIterator.hasNext()) {
+            Alteration alteration = alterationListIterator.next();
+            JSONObject jsonAlteration = new JSONObject();
+            jsonAlteration.put("id", alteration.getId());
+            jsonAlteration.put("dateTime", alteration.getDateTime());
+            jsonAlteration.put("title", alteration.getTitle());
+            jsonAlteration.put("type", alteration.getType());
+            // Procedure
+            // References
+            jsonAlterationsArray.add(jsonAlteration);
+        }
+        // Add JSON alterations array to inner JSON object of JSONSystemLog object
+        jsonSystemLogObject.put("alterations", jsonAlterationsArray);
+
+        return jsonSystemLog;
     }
 
     /*
      * STATIC METHODS MOST LIKELY WILL BE REMOVED
      */
 
-    public static JSONObject getJSONObjectFromSystemLog(SystemLog systemLog) {
+    private static JSONObject getJSONObjectFromSystemLog(SystemLog systemLog) {
         // JSON object representing the log
         JSONObject jsonLog = new JSONObject();
         // Array of alterations to be put into log JSON object
@@ -52,7 +76,7 @@ public class JSONSystemLogGenerator extends FormatSystemLogGenerator {
         return jsonLog;
     }
 
-    public static JSONObject getJSONObjectFromAlteration(Alteration alteration) {
+    private static JSONObject getJSONObjectFromAlteration(Alteration alteration) {
         // JSON object representing the alteration
         JSONObject jsonAlteration = new JSONObject();
 

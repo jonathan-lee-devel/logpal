@@ -1,5 +1,7 @@
 package com.jdevel.format.file;
 
+import com.jdevel.format.Format;
+
 import java.io.File;
 
 /**
@@ -9,7 +11,10 @@ import java.io.File;
  */
 public abstract class FormatFileWriter {
 
-    public static String fileExtension;
+    /**
+     * Format which the writer is intended to write
+     */
+    private Format format;
 
     /**
      * File which is to be written to
@@ -17,11 +22,24 @@ public abstract class FormatFileWriter {
     private File file;
 
     /**
-     * Basic constructor, passes File parameter to the setter
+     * Constructor, passes File parameter to the setter, no default constructor ensures format and file parameter is passed
      * @param file file to be written to, passed to setter
      */
-    public FormatFileWriter(File file) {
+    public FormatFileWriter(Format format, File file) {
+        this.setFormat(format);
         this.setFile(file);
+    }
+
+    /*
+     * Getters and Setters
+     */
+
+    public Format getFormat() {
+        return this.format;
+    }
+
+    private void setFormat(Format format) {
+        this.format = format;
     }
 
     /**

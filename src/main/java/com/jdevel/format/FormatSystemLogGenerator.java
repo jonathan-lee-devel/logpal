@@ -1,7 +1,9 @@
 package com.jdevel.format;
 
+import com.jdevel.alteration.SystemLog;
+
 /**
- * Used to generate a format-specific system log from a format-independent log
+ * Used to generate a format-specific system log from a format-independent log from the alteration package
  */
 public abstract class FormatSystemLogGenerator {
 
@@ -18,7 +20,12 @@ public abstract class FormatSystemLogGenerator {
         this.setFormat(format);
     }
 
-    public abstract FormatSystemLog getFormattedLog();
+    /**
+     * Returns a format-specific log, procedure will vary across formats
+     * @param systemLog format-independent log for which a format-specific log is to be generated
+     * @return format-specific log
+     */
+    public abstract FormatSystemLog getFormattedLog(SystemLog systemLog);
 
     /*
      * Getters and Setters

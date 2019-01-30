@@ -37,7 +37,7 @@ public class ProcedureContent {
      * @return success flag
      */
     public boolean addBody(String body) {
-        return this.bodies.add(body);
+        return this.getBodies().add(body);
     }
 
     /**
@@ -46,7 +46,7 @@ public class ProcedureContent {
      * @return success flag
      */
     public boolean removeBody(String body) {
-        return this.bodies.remove(body);
+        return this.getBodies().remove(body);
     }
 
     /**

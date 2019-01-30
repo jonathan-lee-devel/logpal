@@ -1,59 +1,58 @@
 package com.jdevel.app;
 
 import com.jdevel.alteration.Alteration;
+import com.jdevel.alteration.Procedure;
+import com.jdevel.alteration.ProcedureContent;
 import com.jdevel.alteration.SystemLog;
+import com.jdevel.format.JSONSystemLog;
 import com.jdevel.format.JSONSystemLogGenerator;
 import com.jdevel.format.file.JSONFileWriter;
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 
 import java.io.File;
+import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.UUID;
 
 public class Main {
 
     public static void main(String[] args) {
-        // Creating test JSON object
-        JSONObject jsonObject = new JSONObject();
 
-        LocalDateTime currentDateTime = LocalDateTime.now();
-        jsonObject.put("dateTime", currentDateTime);
-
-        jsonObject.put("title", "Installed Google Chrome");
-
-        // Creating test JSON array
-        JSONArray companies = new JSONArray();
-        companies.add("eBay");
-        companies.add("JetBrains");
-        jsonObject.put("Companies", companies);
-
-
-        System.out.println("Main:\n" + jsonObject.toJSONString());
-
-        File file = new File("/home/jonathan/test.json");
-
-        JSONFileWriter jsonFileWriter = new JSONFileWriter(file);
-        jsonFileWriter.writeJSONObjectToFile(jsonObject);
-        System.out.println(JSONFileWriter.fileExtension);
-
+        // Creating example SystemLog
         SystemLog systemLog = new SystemLog();
 
+        // Example procedure
+        Procedure procedure = new Procedure();
+        ProcedureContent content = new ProcedureContent();
+        content.setHeader("cmd");
+        content.addBody("apt-get install -y git");
+        procedure.addContent(content);
+        // Creating and adding 10 example Alterations to the example SystemLog
         for (int i = 0; i < 10; i++) {
             Alteration alteration = new Alteration();
             alteration.setId(UUID.randomUUID());
             alteration.setDateTime(LocalDateTime.now());
             alteration.setTitle("Title[" + i + "]");
             alteration.setType("installation");
-            alteration.setReferences(new ArrayList<UUID>());
+            alteration.setProcedure(procedure);
             systemLog.addAlteration(alteration);
         }
 
-        JSONObject jsonLog = JSONSystemLogGenerator.getJSONObjectFromSystemLog(systemLog);
-        jsonFileWriter.writeJSONObjectToFile(jsonLog);
-        System.out.println("complete!");
-        System.out.println("Log:\n" + jsonLog.toJSONString());
+        // Generating example JSON SystemLog from example SystemLog
+        JSONSystemLogGenerator jsonSystemLogGenerator = new JSONSystemLogGenerator();
+        JSONSystemLog jsonSystemLog = jsonSystemLogGenerator.getFormattedLog(systemLog);
+
+        // Display contents in console
+        System.out.printf("ATTEMPTING TO WRITE THE FOLLIWING LOG TO FILE\n*\n%s\n*\n", jsonSystemLog.getSystemLogJsonObject().toJSONString());
+
+        File file = new File("/home/jonathan/test.json");
+        JSONFileWriter jsonFileWriter = new JSONFileWriter(file);
+        try {
+            jsonFileWriter.writeJSONSystemLogToFile(jsonSystemLog);
+        } catch (IOException exception) {
+            exception.printStackTrace();
+        }
+
+        System.out.println("COMPLETE!!!");
     }
 
 }

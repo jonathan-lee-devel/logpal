@@ -1,5 +1,7 @@
 package com.jdevel.format.file;
 
+import com.jdevel.format.Format;
+import com.jdevel.format.JSONSystemLog;
 import org.json.simple.JSONObject;
 
 import java.io.File;
@@ -8,40 +10,32 @@ import java.io.IOException;
 
 /**
  * Used to write JSON objects to file.
- * Relies on com.codegoogle.simple-json library.
  */
 public class JSONFileWriter extends FormatFileWriter {
 
-    public static String fileExtension = "json";
-
     /**
-     * Basic constructor, simply passes parameter to super constructor
+     * Basic constructor, simply passes default JSON format along with file parameter to super constructor
      * @param file file to which the JSON objects are to be written
      */
     public JSONFileWriter(File file) {
-        super(file);
+        super(Format.getJsonFormat(), file);
     }
 
     /**
-     * Writes the jsonObject parameter passed to the current file using JSONFileWriter.writeJSONObjectToFile(...)
+     * Writes the given JSONSystemLog to file using the private writeJSONObjectToFile() method
+     * @param jsonSystemLog jsonSystemLog to be written to file
+     * @throws IOException possible exception as FileWriter is used in writeJSONObjectToFile() method
+     */
+    public void writeJSONSystemLogToFile(JSONSystemLog jsonSystemLog) throws IOException {
+        this.writeJSONObjectToFile(jsonSystemLog.getSystemLogJsonObject());
+    }
+
+    /**
+     * Writes the jsonObject parameter passed to the current file
      * @param jsonObject the jsonObject to be written to file
      */
-    public void writeJSONObjectToFile(JSONObject jsonObject) {
-        try {
-            JSONFileWriter.writeJSONObjectToFile(this.getFile(), jsonObject);
-        } catch(IOException ioException) {
-            ioException.printStackTrace();
-        }
-    }
-
-    /**
-     * Writes the given JSON object parameter to the given file parameter
-     * @param file file to which the JSON object is to be wrritten
-     * @param jsonObject JSON object which is to be written to file
-     * @throws IOException possibly thrown when attempting ot write to file
-     */
-    public static void writeJSONObjectToFile(File file, JSONObject jsonObject) throws IOException {
-        FileWriter fileWriter = new FileWriter(file);
+    private void writeJSONObjectToFile(JSONObject jsonObject) throws IOException {
+        FileWriter fileWriter = new FileWriter(this.getFile());
         fileWriter.write(jsonObject.toJSONString());
         fileWriter.close();
     }

@@ -5,6 +5,9 @@ package com.jdevel.format;
  */
 public abstract class FormatSystemLog {
 
+    /**
+     * Format of the system log
+     */
     private Format format;
 
     /**
