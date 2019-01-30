@@ -1,11 +1,16 @@
-package com.jdevel.alteration;
+package com.jdevel.format;
 
+import com.jdevel.alteration.Alteration;
+import com.jdevel.alteration.SystemLog;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
 import java.util.UUID;
 
-public class SystemLogJSONGenerator {
+/**
+ * System log generator for the JSON format
+ */
+public class JSONSystemLogGenerator extends FormatGenerator {
 
     public static JSONObject getJSONObjectFromSystemLog(SystemLog systemLog) {
         // JSON object representing the log
@@ -15,7 +20,7 @@ public class SystemLogJSONGenerator {
 
         // Add each alteration from system log parameter to the JSON alterations array
         for (Alteration alteration : systemLog.getAlterations()) {
-            jsonAlterations.add( SystemLogJSONGenerator.getJSONObjectFromAlteration(alteration) );
+            jsonAlterations.add( JSONSystemLogGenerator.getJSONObjectFromAlteration(alteration) );
         }
         // Add the JSON alterations array to the log
         jsonLog.put("alterations", jsonAlterations);

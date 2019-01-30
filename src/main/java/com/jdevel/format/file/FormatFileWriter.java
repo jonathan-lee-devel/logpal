@@ -1,4 +1,4 @@
-package com.jdevel.file;
+package com.jdevel.format.file;
 
 import java.io.File;
 
@@ -8,6 +8,8 @@ import java.io.File;
  * Each supported file format will then have its own FormatFileWriter class
  */
 public abstract class FormatFileWriter {
+
+    public static String fileExtension;
 
     /**
      * File which is to be written to

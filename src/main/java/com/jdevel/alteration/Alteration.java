@@ -4,10 +4,14 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.UUID;
 
+/**
+ * Defines an alteration performed on a system,
+ * contains information about the alteration such as date and time that it was performed
+ */
 public class Alteration {
 
     /**
-     * Unique identitfier for the alteration
+     * Unique identifier for the alteration, intended to be set by the SystemLog as it is being added
      */
     private UUID id;
 
@@ -31,47 +35,109 @@ public class Alteration {
      */
     private ArrayList<UUID> references;
 
-    // private ... procedure;
+    /**
+     * Detailed procedure involved to perform the alteration
+     */
+    private Procedure procedure;
 
+    /*
+     * Getters and Setters
+     */
 
+    /**
+     * Getter for id
+     * @return id
+     */
     public UUID getId() {
         return id;
     }
 
+    /**
+     * Setter for id
+     * @param id id to set
+     */
     public void setId(UUID id) {
         this.id = id;
     }
 
+    /**
+     * Getter for dateTime
+     * @return dateTime
+     */
     public LocalDateTime getDateTime() {
         return dateTime;
     }
 
+    /**
+     * Setter for dateTime
+     * @param dateTime dateTime to set
+     */
     public void setDateTime(LocalDateTime dateTime) {
         this.dateTime = dateTime;
     }
 
+    /**
+     * Getter for title
+     * @return title
+     */
     public String getTitle() {
         return title;
     }
 
+    /**
+     * Setter for title
+     * @param title title to be set
+     */
     public void setTitle(String title) {
         this.title = title;
     }
 
+    /**
+     * Getter for type
+     * @return type
+     */
     public String getType() {
         return type;
     }
 
+    /**
+     * Setter for type
+     * @param type type to be set
+     */
     public void setType(String type) {
         this.type = type;
     }
 
+    /**
+     * Getter for references
+     * @return references
+     */
     public ArrayList<UUID> getReferences() {
         return references;
     }
 
+    /**
+     * Setter for references
+     * @param references references to be set
+     */
     public void setReferences(ArrayList<UUID> references) {
         this.references = references;
+    }
+
+    /**
+     * Getter for procedure
+     * @return procedure
+     */
+    public Procedure getProcedure() {
+        return this.procedure;
+    }
+
+    /**
+     * Setter for procedure
+     * @param procedure procedure to set
+     */
+    public void setProcedure(Procedure procedure) {
+        this.procedure = procedure;
     }
 
 }

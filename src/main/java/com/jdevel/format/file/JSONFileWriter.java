@@ -1,4 +1,4 @@
-package com.jdevel.file;
+package com.jdevel.format.file;
 
 import org.json.simple.JSONObject;
 
@@ -11,6 +11,8 @@ import java.io.IOException;
  * Relies on com.codegoogle.simple-json library.
  */
 public class JSONFileWriter extends FormatFileWriter {
+
+    public static String fileExtension = "json";
 
     /**
      * Basic constructor, simply passes parameter to super constructor

@@ -3,7 +3,7 @@ package com.jdevel.alteration;
 import java.util.ArrayList;
 
 /**
- * Contains all of the alterations performed on the system
+ * Log which contains all of the alterations performed on the system
  */
 public class SystemLog {
 
@@ -47,7 +47,7 @@ public class SystemLog {
      * Setter for the alterations list, simply sets to the parameter passed
      * @param alterations alterations list to be set
      */
-    public void setAlterations(ArrayList<Alteration> alterations) {
+    private void setAlterations(ArrayList<Alteration> alterations) {
         this.alterations = alterations;
     }
 

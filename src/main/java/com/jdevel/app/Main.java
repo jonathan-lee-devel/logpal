@@ -1,9 +1,9 @@
-package com.jdevel;
+package com.jdevel.app;
 
 import com.jdevel.alteration.Alteration;
 import com.jdevel.alteration.SystemLog;
-import com.jdevel.alteration.SystemLogJSONGenerator;
-import com.jdevel.file.JSONFileWriter;
+import com.jdevel.format.JSONSystemLogGenerator;
+import com.jdevel.format.file.JSONFileWriter;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 
@@ -36,6 +36,7 @@ public class Main {
 
         JSONFileWriter jsonFileWriter = new JSONFileWriter(file);
         jsonFileWriter.writeJSONObjectToFile(jsonObject);
+        System.out.println(JSONFileWriter.fileExtension);
 
         SystemLog systemLog = new SystemLog();
 
@@ -49,7 +50,7 @@ public class Main {
             systemLog.addAlteration(alteration);
         }
 
-        JSONObject jsonLog = SystemLogJSONGenerator.getJSONObjectFromSystemLog(systemLog);
+        JSONObject jsonLog = JSONSystemLogGenerator.getJSONObjectFromSystemLog(systemLog);
         jsonFileWriter.writeJSONObjectToFile(jsonLog);
         System.out.println("complete!");
         System.out.println("Log:\n" + jsonLog.toJSONString());
