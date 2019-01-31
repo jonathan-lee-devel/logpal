@@ -41,9 +41,6 @@ public class Main {
         JSONSystemLogGenerator jsonSystemLogGenerator = new JSONSystemLogGenerator();
         JSONSystemLog jsonSystemLog = jsonSystemLogGenerator.getFormattedLog(systemLog);
 
-        // Display contents in console
-        System.out.printf("ATTEMPTING TO WRITE THE FOLLIWING LOG TO FILE\n*\n%s\n*\n", jsonSystemLog.getSystemLogJsonObject().toJSONString());
-
         // Write the log to a .json file
         File file = new File("/home/jonathan/test." + jsonSystemLog.getFormat().getExtension());
         JSONFileWriter jsonFileWriter = new JSONFileWriter(file);

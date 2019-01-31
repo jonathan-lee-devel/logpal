@@ -1,5 +1,9 @@
 package com.jdevel.format.file;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.SerializationConfig;
+import com.fasterxml.jackson.databind.SerializationFeature;
 import com.jdevel.format.Format;
 import com.jdevel.format.JSONSystemLog;
 import org.json.simple.JSONObject;
@@ -36,7 +40,17 @@ public class JSONFileWriter extends FormatFileWriter {
      */
     private void writeJSONObjectToFile(JSONObject jsonObject) throws IOException {
         FileWriter fileWriter = new FileWriter(this.getFile());
-        fileWriter.write(jsonObject.toJSONString());
+
+        // Add indentations to JSON data
+        ObjectMapper objectMapper = new ObjectMapper();
+        objectMapper.configure(SerializationFeature.INDENT_OUTPUT, true);
+
+        String rawJsonString = jsonObject.toJSONString();
+        JsonNode tree = objectMapper.readTree(rawJsonString);
+
+        String formattedJsonString = objectMapper.writeValueAsString(tree);
+
+        fileWriter.write(formattedJsonString);
         fileWriter.close();
     }
 
